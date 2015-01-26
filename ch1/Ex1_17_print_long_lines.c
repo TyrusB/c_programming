@@ -1,5 +1,6 @@
 #include <stdio.h>
-#define MAXLINE 1000
+#define   MAXLINE         1000
+#define   LONG_DEF        80
 
 int getlinelen(char line[], int maxline);
 void copy(char to[], char from[]);
@@ -9,18 +10,13 @@ main() {
   int len;
   int max;
   char line[MAXLINE];     /* The current input line */
-  char longest[MAXLINE];  /* longest line seen so far */
   
   max = 0;
   while ( (len = getlinelen(line, MAXLINE)) > 0 ) {
-    if ( len > max ) {
-      max = len;
-      copy( longest, line );
+    if ( len > LONG_DEF ) {
+      printf("Long Line:\n");
+      printf("%s \n", line);
     }
-  }
-  if ( max > 0 ) {
-    printf("\nThe longest line:\n");
-    printf("%s", longest);
   }
   return 0;
 }
