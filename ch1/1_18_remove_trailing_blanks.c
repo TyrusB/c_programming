@@ -5,7 +5,7 @@ int getlinelen(char line[], int maxline);
 int striptabs(char line[]);
 
 /* remove trailing tabs from line */
-main() {
+int main() {
   int len, lastchar;
   char line[MAXLINE];     /* The current input line */
   
@@ -35,18 +35,18 @@ int striptabs(char s[])
 {
   int i;
   
-  for( i = 0; s[i] != "\0"; i++ )
+  for( i = 0; s[i] != '\n'; ++i )
     ;
-  
+
   --i;
-  for( i > 0; (s[i] == "\t") || (s[i] == " "); i-- )
+  for( ; ((s[i] == '\t') || (s[i] == ' ')) && i < 0; i-- )
     ;
-  
-  if( i > 0 ) {
+
+  if( i >= 0 ) {
     ++i;
-    s[i] = "\n";
+    s[i] = '\n';
     ++i;
-    s[i] = "\0";
+    s[i] = '\0';
   }
   
   return i;
