@@ -3,66 +3,72 @@
 
 #define MAX_SIZE    100
 
-char[] get_input();
-void strip_hex_id( char[] );
-int hex_to_int( char[] );
-int char_value( char );
+void get_input( char s[]);
+void strip_hex_id( char hex_sting[] );
+int hex_to_int( char hex[] );
+int mchar_value( char c);
 
-char[MAX_SIZE] hex_string;
+char hex_string[MAX_SIZE];
 
 int main()
 {
-  char[] in = get_input();
-  strip_hex_id( in );
-  int hex = hex_to_int( n );
+  get_input( hex_string);
+  strip_hex_id( hex_string );
+  int hex = hex_to_int( hex_string );
   
-  printf("\nThe value is: %i", hex);
+  printf("\nThe value is: %i\n", hex);
 }
 
-char[] get_input()
+void get_input( char s[] )
 {
   int i = 0;
-  int c;
+  char c;
   
-  while( ( c = getchar() ) == 'x' || c == 'X' || ( char_value(c) >= 0 && char_val(c) < 16 ) ) {
-    hex_string[i++] = c;
+  while( ( c = getchar() ) == 'x' || c == 'X' || ( mchar_value(c) >= 0 && mchar_value(c) < 16 ) ) {
+    s[i++] = c;
   }
-  hex_string[i] = '\0';
-    
-  return hex_string;
+  s[i] = '\0';
 }
 
-void strip_hex_id( char[] hex )
+void strip_hex_id( char hex[] )
 {
-  int c = char[1];
+  int c = hex[1];
+  int i;
+  
   if ( c == 'x' || c == 'X' ) {
-    for( int i = 2; char[i] != '\0'; ++i)
-      char[ i - 2] = char[i];
-    char[i-2] = '\0';
+    for( i = 2; hex[i] != '\0'; ++i)
+      hex[ i - 2] = hex[i];
+    hex[i-2] = '\0';
   }
 }
 
-int hex_to_int( char[] s )
+int hex_to_int( char s[] )
 {
   char c;
   int total = 0;
-  int p = 1;
+  int p = 0;
+  int i = 0;
   
-  for( int i = 0; (c = char[i]) != '\0'; ++i) {
-    int val = char_val( c );
+  while( s[i] != '\0' )
+    ++i;
+  --i;
+  
+  for( ; i >= 0; i--) {
+    int val = mchar_value( s[i] );
     total += val * pow(16, p++);
   }
   
   return total;
 }
 
-int char_value( int c )
+
+int mchar_value( char c )
 {
   if( c > '0' && c <= '9')
     return c - '0';
-  else if( c > 'a' && c <= 'f' )
+  else if( c >= 'a' && c <= 'f' )
     return c - 'a' + 10;
-  else if( c > 'A' && c <= 'F' )
+  else if( c >= 'A' && c <= 'F' )
     return c - 'A' + 10;
   else
     return -1;
