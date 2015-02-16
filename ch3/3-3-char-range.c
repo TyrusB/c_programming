@@ -1,29 +1,27 @@
 #include <stdio.h>
 
 // Definitions for our definechar function
-#define LOWERCHAR   3
-#define UPPERCHAR   2
-#define NUMBER      1
-#define OTHER       0
+#define LOWERCHAR   3       //'a' - 'z'
+#define UPPERCHAR   2       //'A' - 'Z'
+#define NUMBER      1       // 1 - 9
+#define OTHER       0       // Anything else
 
 #define TRUE        1
 #define FALSE       0
 
-#define MAXBUFFER   1000
 
-int definechar(char c);
-void printrange(char start, char stop);
+int definechar(char c);           // Returns a constant relating to the type of char the input is
+void printrange(char start, char stop);  // Prints a range of characters, inclusive
 
 int main()
 {
   char firstchar, nextchar;
-  int firsttype, bufstart, fetched;
-  
-  bufstart = -1;
+  int firsttype, fetched;
   
   printf("Expanding Input:\n");
-  while ( (fetched == TRUE && (firstchar=nextchar) && (fetched = FALSE)) || ((firstchar=getchar()) != EOF) ) {
-    int firsttype = definechar(firstchar);
+  while ( (fetched == TRUE && (firstchar=nextchar) != EOF) || ((firstchar=getchar()) != EOF) ) {
+    fetched = FALSE;
+    firsttype = definechar(firstchar);
     if (firsttype == OTHER) {
       putchar(firstchar);
     } else {
@@ -37,7 +35,7 @@ int main()
           putchar('-');
           fetched = TRUE;
         }
-      } else {
+      } else { // if the next char is not '-'
         putchar(firstchar);
         fetched = TRUE;
       }
@@ -61,6 +59,10 @@ int definechar(char c)
 
 void printrange(char start, char stop)
 {
-  while (start <= stop)
-    putchar(start++);
+  if (start < stop)
+    while (start <= stop)
+      putchar(start++);
+  else
+    while (start >= stop)
+      putchar(start--);
 }
